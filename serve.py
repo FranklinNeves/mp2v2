@@ -1,15 +1,8 @@
 import flask
 from flask import request, jsonify
-from stress_cpu import *
 import subprocess
 import socket
 
-# Do intensive computation to stress the CPU
-def stress_cpu(n):
-    total = 0
-    for i in range(n):
-        total += i**2
-    return total
 
 app = flask.Flask(__name__)
 # tell Flask to use the above defined config
@@ -18,6 +11,7 @@ app = flask.Flask(__name__)
 # GET requests will be blocked 'GET', 
 @app.route('/', methods=['POST'])
 def save():
+    print("POST Called")
     command = 'python3 stress_cpu.py' # if you want to pass any arguments
     p = subprocess.Popen(
         [command],
@@ -31,7 +25,10 @@ def save():
 
 @app.route('/', methods=['GET'])
 def retrieve():
-    return str(socket.gethostname())
+    print("GET Called")
+    hostname = socket.gethostname()
+    ip_address = socket.gethostbyname(hostname)
+    return str(ip_address)
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0',port=5000)
