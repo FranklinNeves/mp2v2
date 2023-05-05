@@ -1,6 +1,5 @@
 import flask
 from flask import request, jsonify
-from flask_caching import Cache
 from stress_cpu import *
 import subprocess
 import socket
@@ -20,7 +19,6 @@ def stress_cpu(n):
 app = flask.Flask(__name__)
 # tell Flask to use the above defined config
 app.config.from_mapping(config)
-cache = Cache(app)
 
 # GET requests will be blocked 'GET', 
 @app.route('/', methods=['POST'])
