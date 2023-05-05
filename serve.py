@@ -4,11 +4,6 @@ from stress_cpu import *
 import subprocess
 import socket
 
-config = {
-    "DEBUG": False,          # some Flask specific configs
-    "CACHE_TYPE": "SimpleCache"  # Flask-Caching related configs
-}
-
 # Do intensive computation to stress the CPU
 def stress_cpu(n):
     total = 0
@@ -18,12 +13,12 @@ def stress_cpu(n):
 
 app = flask.Flask(__name__)
 # tell Flask to use the above defined config
-app.config.from_mapping(config)
+
 
 # GET requests will be blocked 'GET', 
 @app.route('/', methods=['POST'])
 def save():
-    command = './stress_cpu.py' # if you want to pass any arguments
+    command = 'python3 stress_cpu.py' # if you want to pass any arguments
     p = subprocess.Popen(
         [command],
         shell=True,
@@ -37,3 +32,6 @@ def save():
 @app.route('/', methods=['GET'])
 def retrieve():
     return str(socket.gethostname())
+
+if __name__ == "__main__":
+    app.run(host='0.0.0.0',port=5000)
