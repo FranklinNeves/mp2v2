@@ -11,7 +11,7 @@ app = flask.Flask(__name__)
 @app.route('/', methods=['POST'])
 def save():
     print("POST Called")
-    p = subprocess.Popen("./stress_cpu.py")
+    p = subprocess.Popen(["python3","stress_cpu.py"])
     return str(p.pid)
 
 @app.route('/', methods=['GET'])
