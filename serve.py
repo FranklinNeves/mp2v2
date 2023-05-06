@@ -3,7 +3,6 @@ from flask import request, jsonify
 import subprocess
 import socket
 
-
 app = flask.Flask(__name__)
 # tell Flask to use the above defined config
 
@@ -12,16 +11,8 @@ app = flask.Flask(__name__)
 @app.route('/', methods=['POST'])
 def save():
     print("POST Called")
-    command = 'python3 stress_cpu.py' # if you want to pass any arguments
-    p = subprocess.Popen(
-        [command],
-        shell=False,
-        stdin=None,
-        stdout=subprocess.PIPE,
-        stderr=subprocess.PIPE,
-        close_fds=True)
-    out, err = p.communicate()
-    return ""
+    p = subprocess.Popen("./stress_cpu.py")
+    return str(p.pid)
 
 @app.route('/', methods=['GET'])
 def retrieve():
