@@ -15,7 +15,7 @@ def save():
     command = 'python3 stress_cpu.py' # if you want to pass any arguments
     p = subprocess.Popen(
         [command],
-        shell=True,
+        shell=False,
         stdin=None,
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE,
